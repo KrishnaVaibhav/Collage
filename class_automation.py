@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from datetime import datetime, timedelta
 
-#Subjects and Subjest codes
+#Subjects and Subject codes
 subjets = {1: {'name': 'APPLICATION SECURITY', 'number': '2', 'id': 'course-link-_5721_1'},
            2: {'name': 'APPLICATION SECURITY LAB', 'number': '3', 'id': 'course-link-_5741_1'},
            3: {'name': 'APTITUDE-WORKSHOP', 'number': '4', 'id': 'course-link-_9760_1'},
@@ -18,26 +18,25 @@ subjets = {1: {'name': 'APPLICATION SECURITY', 'number': '2', 'id': 'course-link
            12: {'name': 'SYSTEM PROGRAMMING', 'number': '13', 'id': 'course-link-_5720_1'},
            13: {'name': 'SYSTEM PROGRAMMING LAB', 'number': '14', 'id': 'course-link-_5739_1'},
            14: {'name': 'SOFT SKILLS-WORKSHOP', 'number': '15', 'id': 'course-link-_9639_1'}}
-#Timings of the classes
+#Shedule timeings of the classes
 shedule_time = ['09:45:00','10:45:00','11:45:00','12:45:00','13:30:00','20:00:00','20:30:00', '15:35:00']
 
 #Path to the Browser
-driver = webdriver.Firefox(executable_path="geckodriver.exe")
+driver = webdriver.Firefox(executable_path="path/to/the/driver.exe")
 driver.maximize_window()
 
 def blackboard():
-	#Login for the BlackBoard
+	#Login for the BlackBoard of cuchd domain
 	driver.get("https://cuchd.blackboard.com/")
 	time.sleep(1)
 	driver.find_element_by_class_name("button-1").click()
-	driver.find_element_by_id("user_id").send_keys('18BCS3523')
-	driver.find_element_by_id("password").send_keys('9007@Tjc10')
+	driver.find_element_by_id("user_id").send_keys('**********') #Enthe UID
+	driver.find_element_by_id("password").send_keys('*********') #Enter the password
 	driver.find_element_by_id("entry-login").click()
 	time.sleep(3)
 
 def start_class(time_table):
     # Attending the classes
-    # Path upto classes -------------------------/html/body/div[1]/div[2]/bb-base-layout/div/main/div/div/div[1]/div[1]/div/div/div[1]/div/div[2]/div/----v-/bb-base-course-card/div[1]/div[2]/a/h4
     for x in range(0,7):
         current_time = datetime.now().strftime("%H:%M:%S")
         if current_time >= shedule_time[x] and current_time <= shedule_time[x + 1] and time_table[x] != 0:
@@ -61,6 +60,7 @@ def start_class(time_table):
             driver.switch_to.alert.accept()
             time.sleep(2)
             driver.find_element_by_xpath('/html/body/div[5]/div/div[2]/div/div/div[2]/button').click()
+	    #Waits untile the end time and close the class tab
             while True:
                 time.sleep(1)
                 current_time = datetime.datetime.now().strftime("%H:%M:%S")
